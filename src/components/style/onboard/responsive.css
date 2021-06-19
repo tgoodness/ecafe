@@ -1,0 +1,28 @@
+@media (max-width: 767px) {
+  .wrapper {
+    background-image: none !important;
+  }
+
+  .form-wrapper {
+    padding: 30px 20px;
+  }
+
+  .h2 {
+    font-size: 20px;
+  }
+
+  .h6 {
+    font-size: 15px;
+  }
+
+  .app-intro{
+	padding: 20px 30px ;
+  }
+
+  .onboard-vector{
+	  display: none;
+  }
+  .onboard-logo{
+    text-align: center;
+  }
+}

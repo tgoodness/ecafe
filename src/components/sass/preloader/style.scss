@@ -1,0 +1,146 @@
+#preloader {
+  position: fixed;
+  z-index: 999;
+  height: 100%vh;
+
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+
+.box span {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #db3236;
+  border-radius: 50%;
+}
+
+.box span:nth-child(1) {
+  background: #f4b400;
+  box-shadow: 0 0 25px #f4b400;
+  animation: animate 2s linear infinite;
+}
+
+.box span:nth-child(2) {
+  background: #4285f4;
+  box-shadow: 0 0 25px #4285f4;
+  animation: animate 2s linear infinite;
+}
+
+.box span:nth-child(2) {
+  background: #4285f4;
+  box-shadow: 0 0 25px #4285f4;
+  animation: animate 2s linear infinite;
+  animation-delay: -1s;
+}
+
+.box span:nth-child(3) {
+  background: #0f7d58;
+  box-shadow: 0 0 25px #0f7d58;
+  animation: animate 2s linear infinite;
+  animation-delay: -0.5s;
+}
+
+.box span:nth-child(4) {
+  background: #db3236;
+  box-shadow: 0 0 25px #db3236;
+  animation: animate 2s linear infinite;
+  animation-delay: -1.5s;
+}
+
+@keyframes animate {
+  0% {
+    top: 0;
+    left: 0;
+  }
+
+  5% {
+    top: 0;
+    left: 0;
+  }
+
+  20% {
+    top: 0;
+    left: 50%;
+  }
+
+  50% {
+    top: 50%;
+    left: 50%;
+  }
+
+  55% {
+    top: 50%;
+    left: 50%;
+  }
+
+  75% {
+    top: 50%;
+    left: 0;
+  }
+
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+/* Effect Preloader start Here */
+.effect-loader-wrapper {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 60px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 999999 !important;
+  div {
+    position: absolute;
+    background-color: #f9edbe;
+    border: 2px solid #efc574;
+    padding: 0 5px 2px 5px;
+    font-size: 13px;
+      z-index: 999999 !important;
+  }
+}
+
+/* Effect Preloader start Here */
+.noConnection-wrapper {
+  position: absolute;
+  top: 15%;
+  left: 55%;
+  right: 50% !important;
+  width: 200px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
+  div {
+    position: absolute;
+    background-color: #f9edbe;
+    border: 2px solid #efc574;
+    padding: 0 5px 2px 5px;
+    font-size: 13px;
+    text-align: center !important;
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.btn-danger {
+  box-shadow: none !important;
+  padding: 10px !important;
+}
+/*MUI Textfied settings */
+.text-field legend {
+  float: none !important;
+}
+
+.text-field  {
+  width: 100% !important;
+  margin-bottom: 10px !important;
+}
+
+.MuiOutlinedInput-input{
+  padding-top: 14.5px !important;
+  padding-bottom: 14.5px !important; 
+}
+
+.text-field  label {
+  top: -4px;
+}
+
+.text-field  label[data-shrink='true'] {
+  top: 0;
+}
+
+
+.Mui-disabled input{
+    color: #3a3a3a;
+}
+
+/* End end */
+
+
+.upload-document input {
+  display: none !important;
+}
+
+.attachFile{
+  transform: rotate(30deg);
+}
+
+.upload-selected{
+  background-color: rgba(15, 125, 88, 0.05);
+}
+
+.file-upload-remove{
+  color: #db3236;
+}
