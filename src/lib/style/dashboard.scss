@@ -1,0 +1,279 @@
+@import '../color/color.scss';
+.dashboard {
+  .filter-icon {
+    text-align: right;
+  }
+
+  .section-one {
+    .card-wrapper {
+      box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
+      border-radius: 20px;
+      padding: 20px;
+      padding-bottom: 10px;
+      background-color: #ffffff;
+      .title {
+        display: flex;
+        justify-content: space-between;
+
+        h5 {
+          font-weight: 600;
+          color: $black-color;
+          font-size: 18px;
+        }
+      }
+
+      .first-row {
+        margin-bottom: 0;
+        h5 {
+          color: $black-color;
+          font-weight: 600;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          span:last-child {
+            font-size: 14px;
+            font-weight: normal;
+            margin-left: 10px;
+          }
+        }
+
+        h6 {
+          padding-bottom: 10px;
+          color: $black-color;
+          font-weight: normal;
+          border-bottom: 1px solid $faint-color;
+        }
+      }
+    }
+
+    .second-row {
+      h5 {
+        color: $black-color;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        span:last-child {
+          font-size: 14px;
+          font-weight: normal;
+          margin-left: 10px;
+        }
+      }
+
+      h6 {
+        color: $grey-color-2;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .transaction-heading {
+    color: $black-color;
+    margin-top: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .section-two {
+    .card-wrapper {
+      box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
+      border-radius: 20px;
+      padding: 20px;
+      padding-bottom: 10px;
+      background-color: #ffffff;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        h5 {
+          font-weight: 600;
+          color: $black-color;
+          font-size: 18px;
+        }
+
+        span {
+          padding: 8px;
+          width: 8px;
+          height: 8px;
+          border-radius: 20px;
+        }
+      }
+
+      .first-row {
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        div {
+          border-bottom: 1px solid $faint-color !important;
+          padding-bottom: 5px;
+          margin-bottom: 5px;
+          flex: 1;
+          h5 {
+            color: $black-color;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            span:last-child {
+              font-size: 14px;
+              font-weight: normal;
+              margin-left: 10px;
+            }
+          }
+
+          h6 {
+            color: $grey-color-2;
+            font-weight: normal;
+          }
+        }
+
+        svg {
+          color: $grey-color-2;
+        }
+      }
+
+      .second-row {
+        display: flex;
+        justify-content: space-between;
+        div {
+          h5 {
+            color: $black-color;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span:last-child {
+              font-size: 14px;
+              font-weight: normal;
+              margin-left: 10px;
+            }
+          }
+
+          h6 {
+            color: $grey-color-2;
+            font-weight: normal;
+          }
+        }
+        svg {
+          color: $grey-color-2;
+        }
+      }
+
+      .pending {
+        background-color: $primary-color !important;
+      }
+      .completed {
+        background-color: $green-color !important;
+      }
+
+      .cancelled {
+        background-color: $red-color !important;
+      }
+    }
+  }
+
+  .section-three {
+    margin-top: 20px;
+    .card-wrapper {
+      box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
+      border-radius: 20px;
+      padding: 20px;
+      padding-bottom: 10px;
+      background-color: #ffffff;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        h5 {
+          font-weight: 600;
+          color: $black-color;
+          font-size: 18px;
+        }
+
+        span {
+          padding: 8px;
+          width: 8px;
+          height: 8px;
+          border-radius: 20px;
+          background-color: $blue-color !important;
+        }
+      }
+
+      .first-row {
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        div {
+          border-bottom: 1px solid $faint-color !important;
+          margin-bottom: 20px;
+          padding-bottom: 5px;
+          flex: 1;
+          h5 {
+            color: $black-color;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            span:last-child {
+              font-size: 14px;
+              font-weight: normal;
+              margin-left: 10px;
+            }
+          }
+
+          h6 {
+            color: $grey-color-2;
+            font-weight: normal;
+          }
+        }
+
+        svg {
+          color: $grey-color-2;
+        }
+      }
+
+      .second-row {
+        display: flex;
+        justify-content: space-between;
+        div {
+          h5 {
+            color: $black-color;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span:last-child {
+              font-size: 14px;
+              font-weight: normal;
+              margin-left: 10px;
+            }
+          }
+
+          h6 {
+            color: $grey-color-2;
+            font-weight: normal;
+          }
+        }
+        svg {
+          color: $grey-color-2;
+        }
+      }
+    }
+
+    .converter {
+      h5 {
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: $black-color;
+      }
+
+      .text-field {
+        background-color: $white-color;
+      }
+    }
+  }
+}

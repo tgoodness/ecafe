@@ -1,0 +1,118 @@
+@import '../color/color.scss';
+.user {
+  .user-bio-wrapper {
+    margin-top: 30px;
+    text-align: center;
+    h5 {
+      font-weight: 600;
+      color: $black-color;
+      margin-top: 20px;
+    }
+
+    h6 {
+      color: $grey-color-2;
+    }
+
+    .switch-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      h6 {
+        font-size: 14px;
+        font-weight: 600;
+        span {
+          margin-left: 10px;
+        }
+      }
+
+      h6:first-child {
+        margin-right: 20px;
+      }
+    }
+
+    .transaction-link {
+      color: $red-color;
+      font-weight: 600;
+      background-color: #e5e5e5;
+      padding: 10px 100px;
+      border-radius: 10px;
+    }
+  }
+
+  .info-wrapper {
+    border: 0.87703px solid #e5e5e5;
+    background-color: $white-color;
+    margin-top: 40px;
+    padding: 20px;
+    border-radius: 20px;
+    .title {
+      font-weight: 600;
+      color: $black-color;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .data {
+      border-bottom: 1px solid $faint-color !important;
+      margin-bottom: 15px;
+      h6 {
+        color: $grey-color-2;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      h5 {
+        font-weight: 600;
+        color: $grey-color-2;
+        font-size: 15px;
+      }
+    }
+
+    .double-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $faint-color !important;
+      margin-bottom: 15px;
+      div {
+        h6 {
+          color: $grey-color-2;
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+
+        h5 {
+          font-weight: 600;
+          color: $grey-color-2;
+          font-size: 15px;
+        }
+      }
+    }
+
+    .double-data-transaction {
+      border-bottom: 1px solid $faint-color !important;
+      margin-bottom: 15px;
+      h6 {
+        color: $grey-color-2;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h5 {
+          font-weight: 600;
+          color: $grey-color-2;
+          font-size: 15px;
+
+          span:first-child {
+            font-weight: normal;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}

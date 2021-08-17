@@ -1,0 +1,27 @@
+@import '../../color/color.scss';
+
+.MuiListItemText-root {
+  span {
+    color: $black-color !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+}
+
+.menu-selected {
+  color: $primary-color !important;
+}
+
+.menu-selected .MuiListItem-root {
+  background-color: $black-color !important;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.menu-selected {
+  span {
+    color: $primary-color !important;
+  }
+  svg {
+    color: $primary-color !important;
+  }
+}

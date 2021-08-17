@@ -1,0 +1,13 @@
+@import '../color/color.scss';
+.login {
+  text-align: center;
+  margin-top: 50px;
+  h5 {
+    font-weight: 600;
+    color: $black-color;
+    margin-top: 20px;
+  }
+  h6 {
+    color: $grey-color;
+  }
+}

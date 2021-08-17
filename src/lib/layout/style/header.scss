@@ -1,0 +1,25 @@
+@import '../../color/color.scss';
+
+.account-menu {
+  a {
+    color: $black-color;
+  }
+
+  li {
+    font-family: 'Inter', sans-serif;
+  }
+
+  &:hover {
+    color: $black-color;
+    text-decoration: none;
+  }
+
+  svg {
+    background: #eff0fb;
+    border-radius: 50px;
+    padding: 5px;
+    font-size: 35px;
+    color: $black-color;
+    margin-right: 15px;
+  }
+}
