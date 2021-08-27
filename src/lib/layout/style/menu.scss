@@ -4,11 +4,10 @@
   span {
     color: $black-color !important;
     font-family: 'Inter', sans-serif !important;
+    letter-spacing: 1.2px;
+    font-size: 15px;
+    font-weight: 500;
   }
-}
-
-.menu-selected {
-  color: $primary-color !important;
 }
 
 .menu-selected .MuiListItem-root {
@@ -20,6 +19,7 @@
 .menu-selected {
   span {
     color: $primary-color !important;
+    font-weight: 600;
   }
   svg {
     color: $primary-color !important;

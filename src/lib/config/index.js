@@ -11,7 +11,10 @@ const UserTransactions = lazy(() => import('../../components/user/transactions/T
 const TradeCrypto = lazy(() => import('../../components/trade-crypto/TradeCrypto'));
 const P2P = lazy(() => import('../../components/p2p/P2P'));
 const Transfer = lazy(() => import('../../components/transfer/Transfer'));
+const Receive = lazy(() => import('../../components/receive-crypto/Receive'));
 const SubAdmins = lazy(() => import('../../components/sub-admins/SubAdmins'));
+const SubAdmin = lazy(() => import('../../components/sub-admin/SubAdmin'));
+const SubAdminActivity = lazy(() => import('../../components/sub-admin/activity/Activity'));
 const Profile = lazy(() => import('../../components/profile/Profile'));
 const SendCrypto = lazy(() => import('../../components/send-crypto/SendCrypto'));
 const ChangePassword = lazy(() => import('../../components/change-password/ChangePassword'));
@@ -22,19 +25,21 @@ function Index() {
     <Suspense fallback={<FallBack />}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Login} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/users" component={Users} />
           <PrivateRoute path="/user/transactions/:registrationId" component={UserTransactions} />
           <PrivateRoute path="/user/:registrationId" component={User} />
           <PrivateRoute path="/sub-admins" component={SubAdmins} />
+          <PrivateRoute path="/sub-admin/activity/:registrationId" component={SubAdminActivity} />
+          <PrivateRoute path="/sub-admin/:registrationId" component={SubAdmin} />
           <PrivateRoute path="/trade-crypto" component={TradeCrypto} />
           <PrivateRoute path="/p2p" component={P2P} />
           <PrivateRoute path="/transfer" component={Transfer} />
+          <PrivateRoute path="/receive" component={Receive} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/send-crypto" component={SendCrypto} />
           <PrivateRoute path="/change-password" component={ChangePassword} />
-
           <PrivateRoute path="/*" component={PageNotFound} />
         </Switch>
       </BrowserRouter>

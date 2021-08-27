@@ -1,0 +1,75 @@
+@import '../color/color.scss';
+.p2p-details {
+  margin-top: 30px;
+  max-height: 600px;
+  overflow-y: scroll;
+
+  .row-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $faint-color;
+    padding-bottom: 15px;
+
+    h6 {
+      font-size: 15px;
+      color: $grey-color;
+      margin-bottom: 15px;
+    }
+
+    h5 {
+      font-size: 15px;
+      color: $black-color;
+      font-weight: 600;
+    }
+
+    div:last-child {
+      text-align: right;
+    }
+
+    div:first-child {
+      text-align: left;
+    }
+
+    span {
+      font-weight: normal;
+      margin-left: 15px;
+    }
+
+    .type {
+      color: $primary-color;
+    }
+
+    .pending {
+      color: $primary-color;
+      background-color: rgba($color: $primary-color, $alpha: 0.2);
+      padding: 5px 20px;
+      border-radius: 5px;
+      margin-left: 0;
+    }
+
+    .success {
+      color: $green-color;
+      background-color: rgba($color: $green-color, $alpha: 0.2);
+      padding: 5px 20px;
+      border-radius: 5px;
+      margin-left: 0;
+    }
+
+    .danger {
+      color: $red-color;
+      background-color: rgba($color: $red-color, $alpha: 0.2);
+      padding: 5px 20px;
+      border-radius: 5px;
+      margin-left: 0;
+    }
+  }
+
+  .pop-wrapper {
+    img {
+      border-radius: 20px;
+      height: 120px;
+    }
+  }
+}

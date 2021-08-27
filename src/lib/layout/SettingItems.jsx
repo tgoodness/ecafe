@@ -4,7 +4,12 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import Item from './ListItem';
 
-import { LayersOutlined, SendOutlined, SwapHorizontalCircleOutlined } from '@material-ui/icons';
+import {
+  LayersOutlined,
+  SendOutlined,
+  SwapHorizontalCircleOutlined,
+  CloudDoneOutlined,
+} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +39,7 @@ export default function NestedList() {
       <Item title="Trade Crypto" to="/trade-crypto" icon={<LayersOutlined />} />
       <Item title="P2P" to="/p2p" icon={<SwapHorizontalCircleOutlined />} />
       <Item title="Transfer" to="/transfer" icon={<SendOutlined />} />
+      <Item title="Receive" to="/receive" icon={<CloudDoneOutlined />} />
     </List>
   );
 }

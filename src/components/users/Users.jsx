@@ -6,12 +6,15 @@ import { Link } from 'react-router-dom';
 
 import Pageview from '../../lib/layout/Pageview';
 import searchLogic from './core/SearchLogic';
+import util from '../../lib/service/util';
 import '../../lib/style/users.scss';
 
 function Users() {
+  let count = 0;
   const data = [
     {
       key: '001',
+      sn: util.SNformat(count++),
       username: 'Lamilami',
       firstName: 'Oluwasegun',
       lastName: 'Kosemani',
@@ -20,6 +23,7 @@ function Users() {
     },
     {
       key: '002',
+      sn: util.SNformat(count++),
       username: 'Goodness',
       firstName: 'Tobiloba',
       lastName: 'Akinyemi',
@@ -31,6 +35,14 @@ function Users() {
   const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
 
   const columns = [
+    {
+      title: 'SN',
+      dataIndex: 'sn',
+      key: 'sn',
+      sorter: {
+        compare: (a, b) => a.sn - b.sn,
+      },
+    },
     {
       title: 'Username',
       dataIndex: 'username',
@@ -51,7 +63,7 @@ function Users() {
     },
 
     {
-      title: 'First Name',
+      title: 'FirstName',
       dataIndex: 'firstName',
       key: 'firstName',
       sorter: (a, b) => {
@@ -68,7 +80,7 @@ function Users() {
     },
 
     {
-      title: 'Last Name',
+      title: 'LastName',
       dataIndex: 'lastName',
       key: 'lastName',
       sorter: (a, b) => {

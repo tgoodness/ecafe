@@ -27,7 +27,7 @@ const Botmecash = {
     return !!pattern.test(str);
   },
 
-  randomNumber(to) {
+  randomNumber(to = 1000) {
     return Math.floor(Math.random() * to);
   },
 
@@ -226,6 +226,11 @@ const Botmecash = {
       return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.2)';
     }
     throw new Error('Bad Hex');
+  },
+
+  SNformat(value) {
+    if (value <= 9) return '0' + (value + 1);
+    else return value;
   },
 };
 

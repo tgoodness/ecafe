@@ -8,8 +8,8 @@
     .card-wrapper {
       box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
       border-radius: 20px;
-      padding: 20px;
-      padding-bottom: 10px;
+      padding: 30px;
+      padding-bottom: 20px;
       background-color: #ffffff;
       .title {
         display: flex;
@@ -29,7 +29,7 @@
           font-weight: 600;
           font-size: 16px;
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           span:last-child {
             font-size: 14px;
             font-weight: normal;
@@ -41,7 +41,6 @@
           padding-bottom: 10px;
           color: $black-color;
           font-weight: normal;
-          border-bottom: 1px solid $faint-color;
         }
       }
     }
@@ -67,19 +66,12 @@
     }
   }
 
-  .transaction-heading {
-    color: $black-color;
-    margin-top: 20px;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-
-  .section-two {
+  .transaction-section {
     .card-wrapper {
       box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
       border-radius: 20px;
-      padding: 20px;
-      padding-bottom: 10px;
+      padding: 30px;
+      padding-bottom: 20px;
       background-color: #ffffff;
       .title {
         display: flex;
@@ -92,11 +84,8 @@
           font-size: 18px;
         }
 
-        span {
-          padding: 8px;
-          width: 8px;
-          height: 8px;
-          border-radius: 20px;
+        svg {
+          font-size: 40px;
         }
       }
 
@@ -105,7 +94,6 @@
         display: flex;
         justify-content: space-between;
         div {
-          border-bottom: 1px solid $faint-color !important;
           padding-bottom: 5px;
           margin-bottom: 5px;
           flex: 1;
@@ -162,25 +150,25 @@
       }
 
       .pending {
-        background-color: $primary-color !important;
+        color: $primary-color !important;
       }
       .completed {
-        background-color: $green-color !important;
+        color: $green-color !important;
       }
 
       .cancelled {
-        background-color: $red-color !important;
+        color: $red-color !important;
       }
     }
   }
 
-  .section-three {
+  .bitcoin-section {
     margin-top: 20px;
     .card-wrapper {
       box-shadow: 0px 0px 6.04699px rgba(84, 83, 83, 0.25);
       border-radius: 20px;
-      padding: 20px;
-      padding-bottom: 10px;
+      padding: 30px;
+      padding-bottom: 20px;
       background-color: #ffffff;
       .title {
         display: flex;
@@ -193,12 +181,9 @@
           font-size: 18px;
         }
 
-        span {
-          padding: 8px;
-          width: 8px;
-          height: 8px;
-          border-radius: 20px;
-          background-color: $blue-color !important;
+        svg {
+          font-size: 40px;
+          color: $blue-color !important;
         }
       }
 
@@ -207,7 +192,6 @@
         display: flex;
         justify-content: space-between;
         div {
-          border-bottom: 1px solid $faint-color !important;
           margin-bottom: 20px;
           padding-bottom: 5px;
           flex: 1;

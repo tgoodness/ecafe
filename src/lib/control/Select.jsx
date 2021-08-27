@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import func from '../service/func';
+import util from '../service/util';
 export default function SimpleSelect(prob) {
   const { name, label, value, error = null, onChange, helperText, items, ...rest } = prob;
 
@@ -24,7 +24,7 @@ export default function SimpleSelect(prob) {
       >
         {items.map((item) => {
           return (
-            <MenuItem key={func.randomNumber() + item} value={item}>
+            <MenuItem key={util.randomNumber() + item} value={item}>
               {item}
             </MenuItem>
           );

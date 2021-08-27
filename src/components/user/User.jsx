@@ -28,7 +28,7 @@ function User() {
               </h6>
             </div>
             <Link to={`/user/transactions/${'848'}`}>
-              <span className="transaction-link">Tansaction History</span>
+              <span className="transaction-link">Activities</span>
             </Link>
           </div>
 

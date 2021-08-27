@@ -1,1 +1,35 @@
 @import '../color/color.scss';
+.profile {
+  text-align: center;
+  .image-wrapper {
+    margin-top: 5px;
+    text-align: center;
+    margin-bottom: 30px;
+  
+    label {
+      position: relative;
+      .mask-icon {
+        background-color: rgba($color: #000000, $alpha: 0.3);
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border-radius: 100px;
+
+        svg {
+          margin-top: 40px;
+          font-size: 40px;
+          color: $white-color;
+        }
+      }
+      img {
+        border-radius: 100px;
+        width: 130px;
+        height: 130px;
+      }
+    }
+  }
+
+  button {
+    margin-top: 30px;
+  }
+}

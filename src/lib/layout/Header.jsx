@@ -6,10 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import './style/header.scss';
-
 import Avater from '../assets/avater.png';
 import AccountMenu from './AccountMenu';
+import './style/header.scss';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({

@@ -10,6 +10,9 @@ import {
   PowerSettingsNewOutlined,
 } from '@material-ui/icons';
 
+import changePasswordModal from '../../components/change-password/core/ModalHandler';
+import ChangePassword from '../../components/change-password/ChangePassword';
+
 import './style/header.scss';
 
 function AccountMenu({ anchorEl, open, handleClose }) {
@@ -20,48 +23,51 @@ function AccountMenu({ anchorEl, open, handleClose }) {
     });
   };
 
+  const [visible, showModal, handleCancel] = changePasswordModal(handleClose);
   return (
-    <Menu
-      id="menu-appbar"
-      className="account-menu"
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={open}
-      onClose={handleClose}
-    >
-      <Link to="/profile">
-        <MenuItem>
-          <PersonOutlined />
-          Profile
-        </MenuItem>
-      </Link>
+    <>
+      <Menu
+        id="menu-appbar"
+        className="account-menu"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        <Link to="/profile">
+          <MenuItem>
+            <PersonOutlined />
+            Profile
+          </MenuItem>
+        </Link>
 
-      <Link to="/send-crypto">
-        <MenuItem>
-          <SendOutlined />
-          Send Crypto
-        </MenuItem>
-      </Link>
+        <Link to="/send-crypto">
+          <MenuItem>
+            <SendOutlined />
+            Send Crypto
+          </MenuItem>
+        </Link>
 
-      <Link to="/change-password">
-        <MenuItem>
+        <MenuItem onClick={showModal}>
           <LockOutlined />
           Change Password
         </MenuItem>
-      </Link>
-      <MenuItem onClick={SignOut}>
-        <PowerSettingsNewOutlined />
-        Log Out
-      </MenuItem>
-    </Menu>
+
+        <MenuItem onClick={SignOut}>
+          <PowerSettingsNewOutlined />
+          Log Out
+        </MenuItem>
+      </Menu>
+      <ChangePassword visible={visible} handleCancel={handleCancel} />
+    </>
   );
 }
 
