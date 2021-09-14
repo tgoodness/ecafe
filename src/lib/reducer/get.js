@@ -1,11 +1,11 @@
-import fn from "../service/func";
-import * as type from "./";
+import fn from '../service/func';
+import * as type from './';
 
 export const init = {
   loading: false,
   open: false,
-  message: "",
-  payload: "",
+  message: '',
+  payload: '',
 };
 
 export const reducer = (state, action) => {
@@ -16,7 +16,7 @@ export const reducer = (state, action) => {
       return {
         loading: false,
         open: false,
-        message: "success",
+        message: 'success',
         payload: action.payload,
       };
     case type.FAILED:

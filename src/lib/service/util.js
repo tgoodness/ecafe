@@ -232,6 +232,27 @@ const Botmecash = {
     if (value <= 9) return '0' + (value + 1);
     else return value;
   },
+
+  error404(error) {
+    if (error !== null) {
+      const findCode = error.message.search('404');
+      return findCode === -1 ? false : true;
+    }
+  },
+
+  error500(error) {
+    if (error !== null) {
+      const findCode = error.message.search('500');
+      return findCode === -1 ? false : true;
+    }
+  },
+
+  networkError(error) {
+    if (error !== null) {
+      const findCode = error.message.search('Network Error');
+      return findCode === -1 ? false : true;
+    }
+  },
 };
 
 export default Botmecash;

@@ -1,38 +1,36 @@
-import React, { useState } from 'react';
-import { CheckOutlined, SearchOutlined } from '@material-ui/icons';
+/* eslint-disable react/display-name */
+import React from 'react';
+import { useQuery } from 'react-query';
+import { CheckOutlined, SearchOutlined, CloseOutlined } from '@material-ui/icons';
 import { Table } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import Pageview from '../../lib/layout/Pageview';
+import { ErrorPage } from '../../lib/control/error-page/FallBack';
 import searchLogic from './core/SearchLogic';
-import util from '../../lib/service/util';
+import { users } from '../../lib/http/users';
 import '../../lib/style/users.scss';
 
 function Users() {
-  let count = 0;
-  const data = [
-    {
-      key: '001',
-      sn: util.SNformat(count++),
-      username: 'Lamilami',
-      firstName: 'Oluwasegun',
-      lastName: 'Kosemani',
-      email: 'ceo@botmecash.com',
-      verified: 'YES',
-    },
-    {
-      key: '002',
-      sn: util.SNformat(count++),
-      username: 'Goodness',
-      firstName: 'Tobiloba',
-      lastName: 'Akinyemi',
-      email: 'tobiloba.akinyemi@botmecash.com',
-      verified: 'NO',
-    },
-  ];
+  const { status, error, data } = useQuery('users', users);
+  let payload = [];
+  if (data !== undefined) {
+    data.data.data.users.map((item, index) => {
+      const value = {
+        key: item.registrationId,
+        sn: index + 1,
+        username: item.username,
+        firstName: item.verifyStatus === 'VERIFIED' ? item.firstName : '---',
+        lastName: item.verifyStatus === 'VERIFIED' ? item.lastName : '---',
+        email: item.email,
+        verified: item.verifyStatus,
+      };
+      payload.push(value);
+    });
+  }
 
-  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
+  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(payload);
 
   const columns = [
     {
@@ -47,8 +45,12 @@ function Users() {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
-      // eslint-disable-next-line react/display-name
-      render: (text) => <span className="text-info">{text}</span>,
+
+      render: (text, record) => (
+        <Link to={`user/${record.key}`} className="text-info">
+          {text}
+        </Link>
+      ),
       sorter: (a, b) => {
         var v1 = a.username;
         var v2 = b.username;
@@ -120,7 +122,13 @@ function Users() {
       key: 'verified',
       // eslint-disable-next-line react/display-name
       render: (text) => (
-        <span>{text === 'YES' ? <CheckOutlined className="text-success" /> : '---'}</span>
+        <span>
+          {text === 'VERIFIED' ? (
+            <CheckOutlined className="text-success" />
+          ) : (
+            <CloseOutlined className="text-danger" />
+          )}
+        </span>
       ),
       sorter: (a, b) => {
         var v1 = a.verified;
@@ -148,14 +156,10 @@ function Users() {
     },
   ];
 
-  const src = searchTerm === '' ? data : searchResults;
-  const [selectedRow, setSelectedRow] = useState();
-  const handleSelectedRow = (orderId) => {
-    setSelectedRow(orderId);
-    // showModal();
-  };
-
-  console.log(selectedRow);
+  const src = searchTerm === '' ? payload : searchResults;
+  if (status !== 'success') {
+    return <ErrorPage status={status} error={error} data={data} title="Users" />;
+  }
   return (
     <Pageview title="Users" className="users">
       <div className="row">
@@ -172,13 +176,7 @@ function Users() {
           </div>
 
           <div className="table-responsive">
-            <Table
-              columns={columns}
-              dataSource={src}
-              onRow={(record) => {
-                return { onClick: () => handleSelectedRow(record.key) };
-              }}
-            />
+            <Table columns={columns} dataSource={src} />
           </div>
         </div>
       </div>

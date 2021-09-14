@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
-import FallBack from '../control/error-page/FallBack';
+import { FallBack } from '../control/error-page/FallBack';
 const Login = lazy(() => import('../../components/login/Login'));
 const Dashboard = lazy(() => import('../../components/dashboard/Dashboard'));
 const Users = lazy(() => import('../../components/users/Users'));
@@ -11,7 +11,7 @@ const UserTransactions = lazy(() => import('../../components/user/transactions/T
 const TradeCrypto = lazy(() => import('../../components/trade-crypto/TradeCrypto'));
 const P2P = lazy(() => import('../../components/p2p/P2P'));
 const Transfer = lazy(() => import('../../components/transfer/Transfer'));
-const Receive = lazy(() => import('../../components/receive-crypto/Receive'));
+const Received = lazy(() => import('../../components/received-crypto/Received'));
 const SubAdmins = lazy(() => import('../../components/sub-admins/SubAdmins'));
 const SubAdmin = lazy(() => import('../../components/sub-admin/SubAdmin'));
 const SubAdminActivity = lazy(() => import('../../components/sub-admin/activity/Activity'));
@@ -36,7 +36,7 @@ function Index() {
           <PrivateRoute path="/trade-crypto" component={TradeCrypto} />
           <PrivateRoute path="/p2p" component={P2P} />
           <PrivateRoute path="/transfer" component={Transfer} />
-          <PrivateRoute path="/receive" component={Receive} />
+          <PrivateRoute path="/receive" component={Received} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/send-crypto" component={SendCrypto} />
           <PrivateRoute path="/change-password" component={ChangePassword} />

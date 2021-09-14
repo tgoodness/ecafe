@@ -2,15 +2,16 @@ import React from 'react';
 import { Modal, Image } from 'antd';
 import { Link } from 'react-router-dom';
 
+import util from '../../lib/service/util';
+import { POP_IMG_URL } from '../../lib/http/url';
 import '../../lib/style/p2p-details.scss';
-import POP from '../../lib/assets/pop.png';
 
 function Details(props) {
-  const { data, visible, handleCancel } = props;
-
-  if (data === undefined) {
+  const { reference, data, visible, handleCancel } = props;
+  if (data === undefined || reference === '') {
     return null;
   }
+  const payload = data.data.data.txs.find((p) => p.referenceNumber === reference);
 
   return (
     <Modal
@@ -18,39 +19,57 @@ function Details(props) {
       visible={visible}
       onCancel={handleCancel}
       footer={false}
-      centered={true}
       maskClosable={false}
       className="p2p-details"
     >
+      <div>
+        <h6>Reference</h6>
+        <h5 className="type">{payload.referenceNumber}</h5>
+      </div>
       <div className="row-wrapper">
         <div>
-          <h6>Transact ID</h6>
-          <h5>B9737392</h5>
+          <h6>Status</h6>
+          <h5>
+            {payload.status === 'UNCONFIRMED' && <span className="pending">UNCONFIRMED</span>}
+          </h5>
+          <h5>{payload.status === 'CONFIRMED' && <span className="success">CONFIRMED</span>}</h5>
+          <h5>{payload.status === 'CANCELLED' && <span className="danger">CANCELLED</span>}</h5>
         </div>
         <div>
           <h6>Type</h6>
-          <h5 className="type">BUY (P2P)</h5>
+          <h5 className="type">{payload.orderType}</h5>
         </div>
       </div>
       <div className="row-wrapper">
         <div>
           <h6>Amount (USD)</h6>
-          <h5>578.00</h5>
+          <h5>{payload.amountInDollar}</h5>
         </div>
         <div>
           <h6>Amount (BTC)</h6>
-          <h5>0.00680944</h5>
+          <h5>{payload.amountInCoin}</h5>
         </div>
       </div>
 
       <div className="row-wrapper">
         <div>
-          <h6>Fee (USD)</h6>
-          <h5>5.00</h5>
+          <h6>Buyer Fee(USD)</h6>
+          <h5>{payload.buyerFeeInDollar}</h5>
         </div>
         <div>
-          <h6>Fee (BTC)</h6>
-          <h5>0.00680944</h5>
+          <h6>Buyer Fee (BTC)</h6>
+          <h5>{payload.buyerFeeInCoin}</h5>
+        </div>
+      </div>
+
+      <div className="row-wrapper">
+        <div>
+          <h6>Seller Fee(USD)</h6>
+          <h5>{payload.sellerFeeInDollar}</h5>
+        </div>
+        <div>
+          <h6>Seller Fee (BTC)</h6>
+          <h5>{payload.sellerFeeInCoin}</h5>
         </div>
       </div>
 
@@ -58,7 +77,10 @@ function Details(props) {
         <div>
           <h6>Rate</h6>
           <h5>
-            5.00 <span>{'>'}N450.00</span>
+            ${payload.coinRateInDollar}
+            <span>
+              {'>'}N{payload.coinRateInDollar}
+            </span>
           </h5>
         </div>
       </div>
@@ -67,43 +89,51 @@ function Details(props) {
         <div>
           <h6>Buyer</h6>
           <h5>
-            <Link to="/user/3838383" className="text-info">goodness</Link>
+            <Link to={`/user/${payload.buyer.registrationId}`} className="text-info">
+              {`${payload.buyer.firstName} ${payload.buyer.lastName}`}
+            </Link>
           </h5>
         </div>
         <div>
           <h6>Seller</h6>
           <h5>
-            <Link to="/user/3838383" className="text-info">raphael</Link>
+            <Link to={`/user/${payload.seller.registrationId}`} className="text-info">
+              {`${payload.seller.firstName} ${payload.seller.lastName}`}
+            </Link>
           </h5>
         </div>
       </div>
 
       <div className="row-wrapper">
         <div>
-          <h6>Category</h6>
-          <h5>Dynamic</h5>
-        </div>
-        <div>
-          <h6>In Bit</h6>
-          <h5>YES</h5>
-        </div>
-      </div>
-
-      <div className="row-wrapper">
-        <div>
-          <h6>Date</h6>
-          <h5>20th Sept, 2021</h5>
+          <h6>Date Created</h6>
+          <h5>{util.dateFormat(payload.dateAndTime)}</h5>
         </div>
         <div>
           <h6>Time</h6>
-          <h5>10:00AM</h5>
+          <h5>{util.timeFormat(payload.dateAndTime)}</h5>
         </div>
       </div>
 
-      <div className="pop-wrapper">
-        <h6>Buyer POP</h6>
-        <Image src={POP} />
-      </div>
+      {payload.dateModified !== null && (
+        <div className="row-wrapper">
+          <div>
+            <h6>Date Modified</h6>
+            <h5>{util.dateFormat(payload.dateModified)}</h5>
+          </div>
+          <div>
+            <h6>Time</h6>
+            <h5>{util.timeFormat(payload.dateModified)}</h5>
+          </div>
+        </div>
+      )}
+
+      {payload.popUploaded && (
+        <div className="pop-wrapper">
+          <h6>Buyer POP</h6>
+          <Image src={`${POP_IMG_URL}${payload.proofOfPayment.pop}`} />
+        </div>
+      )}
     </Modal>
   );
 }

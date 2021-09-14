@@ -39,7 +39,7 @@ export default function NestedList() {
       <Item title="Trade Crypto" to="/trade-crypto" icon={<LayersOutlined />} />
       <Item title="P2P" to="/p2p" icon={<SwapHorizontalCircleOutlined />} />
       <Item title="Transfer" to="/transfer" icon={<SendOutlined />} />
-      <Item title="Receive" to="/receive" icon={<CloudDoneOutlined />} />
+      <Item title="Received" to="/receive" icon={<CloudDoneOutlined />} />
     </List>
   );
 }

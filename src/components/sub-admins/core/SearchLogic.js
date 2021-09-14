@@ -12,10 +12,11 @@ function SearchLogic(data) {
 
     const result = data.filter(
       (o) =>
-        o.key.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.username.toString().includes(searchTerm.toLowerCase()) ||
-        o.email.toString().includes(searchTerm.toLowerCase()) ||
-        o.phoneNumber.toString().includes(searchTerm.toLowerCase())
+        o.sn.toString().includes(searchTerm.toString()) ||
+        o.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        o.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        o.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        o.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(result);
   };

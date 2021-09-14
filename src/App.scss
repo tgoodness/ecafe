@@ -85,7 +85,7 @@ body {
 }
 
 .ant-modal-mask {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .ant-modal-content {
@@ -141,8 +141,54 @@ body {
   border-radius: 0 !important;
 }
 
+table {
+  th {
+    color: $white-color;
+    border-bottom: 0.4 $grey-color;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+  }
+
+  tbody tr {
+    background-color: $black-color;
+  }
+
+  td {
+    color: $grey-color;
+    border-bottom: none;
+    font-weight: 500 !important;
+    padding: 5px 20px;
+    white-space: nowrap !important;
+  }
+}
+
+.confirm-modal {
+  h6 {
+    font-weight: normal;
+    color: $black-color;
+    font-size: 17px;
+  }
+
+  .confirm-modal-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+    h5 {
+      color: $primary-color;
+      letter-spacing: 1.3px;
+      font-weight: 600;
+      font-size: 15px;
+      text-transform: uppercase;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 //Geneal Style
-.btn {
+.btn-warning {
   padding: 15px 50px !important;
   box-shadow: none !important;
   text-transform: none;

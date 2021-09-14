@@ -12,11 +12,11 @@ function SearchLogic(data) {
 
     const result = data.filter(
       (o) =>
-        o.key.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        o.key.includes(searchTerm.toLowerCase()) ||
         o.amountInDollar.toString().includes(searchTerm.toLowerCase()) ||
         o.amountInCoin.toString().includes(searchTerm.toLowerCase()) ||
-        o.feeInDollar.toString().includes(searchTerm.toLowerCase()) ||
+        o.sellerFeeInDollar.toString().includes(searchTerm.toLowerCase()) ||
+        o.buyerFeeInDollar.toString().includes(searchTerm.toLowerCase()) ||
         o.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
         o.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
         o.time.toLowerCase().includes(searchTerm.toLowerCase())

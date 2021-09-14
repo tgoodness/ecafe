@@ -6,8 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import Avater from '../assets/avater.png';
 import AccountMenu from './AccountMenu';
+import misc from '../service/misc';
+import global from '../../lib/service/global';
+
+import { Avatar } from 'antd';
 import './style/header.scss';
 
 const drawerWidth = 240;
@@ -58,6 +61,7 @@ export default function MenuAppBar(prob) {
   };
 
   const { title, onClick } = prob;
+  const { GetImage } = global();
 
   return (
     <div className={classes.root}>
@@ -85,7 +89,12 @@ export default function MenuAppBar(prob) {
               onClick={handleMenu}
               color="inherit"
             >
-              <img src={Avater} alt="User" width="30" height="30" className="User Avater" />
+              <Avatar
+                src={misc.adminImage(GetImage())}
+                alt="User"
+                
+                className="User Avater"
+              />
             </IconButton>
 
             <AccountMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />

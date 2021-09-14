@@ -1,16 +1,18 @@
 import React from 'react';
 import { Modal } from 'antd';
-import { AccountCircleOutlined } from '@material-ui/icons';
 
 import Input from '../../../lib/control/Input';
+import Alert from '../../../lib/control/Alert';
 import Select from '../../../lib/control/Select';
 import Button from '../../../lib/control/Button';
 import formHandler from './core/FormHandler';
-import '../../../lib/style/add-admin.scss';
+import addRequest from './core/AddAdmin';
 
 function AddAdmin(props) {
   const { visible, handleCancel } = props;
   const [email, handleEmail, role, handleRole] = formHandler();
+  const [state, handleSubmit, handleClose] = addRequest(email.value, role.value, handleCancel);
+
   return (
     <Modal
       title="Add Admin"
@@ -20,10 +22,8 @@ function AddAdmin(props) {
       centered={true}
       maskClosable={false}
       className="add-admin"
+      destroyOnClose={true}
     >
-      <div className="user-icon-wrapper">
-        <AccountCircleOutlined />
-      </div>
       <Input
         label="Email Address"
         value={email.value}
@@ -41,9 +41,17 @@ function AddAdmin(props) {
         helperText={role.helperText}
         items={['Customer Service', 'Super Service', 'Principal']}
       />
-      <div className="btn-wrapper">
-        <Button className="btn btn-warning btn-block" label="Add Now" loading={false} />
+
+      <div className="mt-3">
+        <Button
+          loading={state.loading}
+          onClick={handleSubmit}
+          className="btn btn-warning btn-block"
+          label="Add Now"
+        />
       </div>
+
+      <Alert open={state.open} msg={state.message} onClose={handleClose} />
     </Modal>
   );
 }

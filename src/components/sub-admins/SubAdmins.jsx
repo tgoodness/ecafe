@@ -1,41 +1,40 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/display-name */
 import React from 'react';
 import { AddOutlined, CheckOutlined, ClearOutlined, SearchOutlined } from '@material-ui/icons';
 import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { RightOutlined } from '@ant-design/icons';
+import { useQuery } from 'react-query';
 
 import Pageview from '../../lib/layout/Pageview';
-import searchLogic from './core/SearchLogic';
+import { ErrorPage } from '../../lib/control/error-page/FallBack';
 import AddAdmin from './add-admin/AddAdmin';
 import modalHandler from './add-admin/core/ModalHandler';
-import util from '../../lib/service/util';
+import searchLogic from './core/SearchLogic';
+
+import { admins } from '../../lib/http/admin';
 import '../../lib/style/shared-history.scss';
 
-function SubAdmins() {
-  let count = 0;
-  const data = [
-    {
-      key: '01',
-      sn: util.SNformat(count++),
-      registrationId: 'BM37392',
-      username: 'Lami',
-      email: 'ceo@botmecash.com',
-      phoneNumber: '10.00',
-      enabled: true,
-    },
-    {
-      key: '02',
-      sn: util.SNformat(count++),
-      registrationId: 'BM37392',
-      username: 'Goodness',
-      email: 'tobiloba.akinyemi@botmecash.com',
-      phoneNumber: '10.00',
-      enabled: false,
-    },
-  ];
+function SubAdmin() {
+  const { status, error, data } = useQuery('admins', admins);
+  let payload = [];
+  if (data !== undefined) {
+    data.data.data.profiles.map((item, index) => {
+      const value = {
+        key: item.registrationId,
+        sn: index + 1,
+        username: item.username === null ? '---' : item.username,
+        email: item.email,
+        role: item.role,
+        phoneNumber: item.phoneNumber === null ? '---' : item.phoneNumber,
+        enabled: item.isLocked,
+      };
+      payload.push(value);
+    });
+  }
 
-  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
+  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(payload);
   const columns = [
     {
       title: 'SN',
@@ -50,11 +49,14 @@ function SubAdmins() {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
-      render: (text) => (
-        <Link to="" className="text-info">
-          {text}
-        </Link>
-      ),
+      render: (text, record) =>
+        text === '---' ? (
+          '---'
+        ) : (
+          <Link to={`/sub-admin/${record.registrationId}`} className="text-info">
+            {text}
+          </Link>
+        ),
       sorter: (a, b) => {
         var v1 = a.username;
         var v2 = b.username;
@@ -86,10 +88,26 @@ function SubAdmins() {
     },
 
     {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+      sorter: (a, b) => {
+        var v1 = a.role;
+        var v2 = b.role;
+        if (v1 < v2) {
+          return -1;
+        }
+        if (v1 > v2) {
+          return 1;
+        }
+        return 0;
+      },
+    },
+
+    {
       title: 'PhoneNumber',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
-      // eslint-disable-next-line react/display-name
       sorter: (a, b) => {
         var v1 = a.feeInDollar;
         var v2 = b.feeInDollar;
@@ -107,11 +125,11 @@ function SubAdmins() {
       title: 'Enabled',
       dataIndex: 'enabled',
       key: 'enabled',
-      render: (enabled) =>
-        enabled ? (
-          <CheckOutlined className="text-success" />
-        ) : (
+      render: (text) =>
+        text ? (
           <ClearOutlined className="text-danger" />
+        ) : (
+          <CheckOutlined className="text-success" />
         ),
     },
 
@@ -119,19 +137,23 @@ function SubAdmins() {
       title: 'More',
       dataIndex: 'key',
       key: 'key',
-      // eslint-disable-next-line react/display-name
-      render: (registrationId) => (
-        <Link to={`/sub-admin/${registrationId}`} className="text-info">
+      render: (text) => (
+        <Link to={`/sub-admin/${text}`} className="text-info">
           <RightOutlined />
         </Link>
       ),
     },
   ];
-  const src = searchTerm === '' ? data : searchResults;
 
+  const src = searchTerm === '' ? payload : searchResults;
   const [visible, showModal, handleCancel] = modalHandler();
+
+  if (status !== 'success') {
+    return <ErrorPage status={status} error={error} data={data} title="Admins" />;
+  }
+
   return (
-    <Pageview title="Sub Admins">
+    <Pageview title="Admins">
       <div className="row shared-history">
         <div className="offset-md-2 col-md-8">
           <div className="search-parent-wrapper">
@@ -161,4 +183,4 @@ function SubAdmins() {
   );
 }
 
-export default SubAdmins;
+export default SubAdmin;

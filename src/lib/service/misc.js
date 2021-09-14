@@ -1,45 +1,32 @@
-import func from './util';
+import util from './util';
 import emptyImage from '../assets/empty-photo.png';
-import { IMG_URL } from '../http/url';
+import { ADMIN_IMG_URL, USER_IMG_URL } from '../http/url';
 
 const misc = {
   accessToken() {
-    const user = func.getItem('user', true);
-    if (user) {
-      const { accessToken } = user;
+    const admin = util.getItem('admin', true);
+    if (admin) {
+      const { accessToken } = admin;
       return accessToken;
     }
     return '';
   },
 
   registrationId() {
-    const data = func.getItem('user', true);
+    const data = util.getItem('admin', true);
     if (data) {
-      return data.user.registrationId;
+      return data.profile.registrationId;
     }
     return '';
   },
 
-  user() {
-    const data = func.getItem('user', true);
-    if (data) {
-      return data.user;
-    }
-
-    return '';
+  adminImage(img) {
+    const profileImage = img === null || img === '' ? emptyImage : `${ADMIN_IMG_URL}${img}`;
+    return profileImage;
   },
-
-  text(text) {
-    if (text !== null) {
-      return text.length > 15 ? text.substring(0, 20) + '...' : text;
-    } else {
-      return '---';
-    }
-  },
-
-  userImage(userProfile) {
-    const UserImage = userProfile === null ? emptyImage : IMG_URL + userProfile;
-    return UserImage;
+  userImage(img) {
+    const profileImage = img === null || img === '' ? emptyImage : `${USER_IMG_URL}${img}`;
+    return profileImage;
   },
 };
 

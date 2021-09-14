@@ -2,15 +2,16 @@ import { useState } from 'react';
 
 function ModalHandler() {
   const [visible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
+  const [reference, setReference] = useState('');
+  const showModal = (e) => {
+    setReference(e.currentTarget.id);
     setIsModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  return [visible, showModal, handleCancel];
+  return [reference, visible, showModal, handleCancel];
 }
 
 export default ModalHandler;

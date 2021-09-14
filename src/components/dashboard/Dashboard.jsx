@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useQuery } from 'react-query';
 import {
   FilterListOutlined,
   CheckOutlined,
@@ -20,19 +22,29 @@ import DollarLogo from '../../lib/assets/currency/dollar.png';
 import Bitcoin from '../../lib/assets/dashboard/bitcoin.png';
 import Profit from '../../lib/assets/dashboard/profit.png';
 import Users from '../../lib/assets/dashboard/users.png';
-
+import { ErrorPage } from '../../lib/control/error-page/FallBack';
+import { analytics } from '../../lib/http/admin';
 import '../../lib/style/dashboard.scss';
 
 function Dashboard() {
+  const { status, error, data } = useQuery('analytics', analytics);
+
+  if (status !== 'success') {
+    return <ErrorPage status={status} error={error} title="Dashboard" />;
+  }
+
+  const btc = data.data.data.btc;
+  const payload = data.data.data;
+
   return (
     <Pageview title="Dashboard" className="dashboard">
       <div className="row">
         <div className="offset-md-2 col-md-8">
-          <div className="filter-icon">
+          {/* <div className="filter-icon">
             <IconButton>
               <FilterListOutlined />
             </IconButton>
-          </div>
+          </div> */}
 
           <div className="row section-one">
             <div className="col-md-6 mb-3">
@@ -44,14 +56,21 @@ function Dashboard() {
 
                 <div className="first-row">
                   <h5>
-                    <span>$60,000.00</span> <span>{'>'}0.073732</span>
+                    <span>${btc.platformBalance.balanceInDollar}</span>{' '}
+                    <span>
+                      {'>'}
+                      {btc.platformBalance.balanceInBTC}
+                    </span>
                   </h5>
                   <h6 className="label">Botmecash</h6>
                 </div>
 
                 <div className="second-row">
                   <h5>
-                    $60,000.00 <span>{'>'} 0.073732</span>
+                    ${btc.customerBalance.totalBalanceInDollar}{' '}
+                    <span>
+                      {'>'} {btc.customerBalance.totalBalance}
+                    </span>
                   </h5>
                   <h6 className="label">Customer</h6>
                 </div>
@@ -67,21 +86,29 @@ function Dashboard() {
 
                 <div className="first-row">
                   <h5>
-                    $10,000.00 <span>{'>'}0.043732</span>
+                    ${btc.totalSellingProfitInDollar}{' '}
+                    <span>
+                      {'>'}
+                      {btc.totalSellingProfitInCoin}
+                    </span>
                   </h5>
                   <h6>Trade Crypto</h6>
                 </div>
 
                 <div className="second-row">
                   <h5>
-                    $62,100.00 <span>{'>'}0.013732</span>
+                    ${btc.totalP2PProfitInDollar}{' '}
+                    <span>
+                      {'>'}
+                      {btc.totalP2PProfitInCoin}
+                    </span>
                   </h5>
                   <h6>P2P</h6>
                 </div>
               </div>
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-6 mb-3">
               <Link to="/users">
                 <div className="card-wrapper">
                   <div className="title">
@@ -90,13 +117,13 @@ function Dashboard() {
                   </div>
 
                   <div className="first-row">
-                    <h5>50000</h5>
+                    <h5>{payload.totalUser}</h5>
                     <h6 className="label">Active</h6>
                   </div>
 
                   <div className="second-row">
-                    <h5>90000</h5>
-                    <h6 className="label">All</h6>
+                    <h5>{payload.totalUserDisabled}</h5>
+                    <h6 className="label">Disabled</h6>
                   </div>
                 </div>
               </Link>
@@ -111,8 +138,8 @@ function Dashboard() {
                 <Link to="/trade-crypto">
                   <div className="first-row">
                     <div>
-                      <h5>20</h5>
-                      <h6 className="label">Trade Crypto</h6>
+                      <h5>{btc.totalPendingBTCSold}</h5>
+                      <h6 className="label">Sell Crypto</h6>
                     </div>
                     <RightOutlined />
                   </div>
@@ -120,7 +147,7 @@ function Dashboard() {
                 <Link to="/transfer">
                   <div className="second-row">
                     <div>
-                      <h5>50</h5>
+                      <h5>{payload.totalPendingTransfer}</h5>
                       <h6 className="label">Transfer</h6>
                     </div>
                     <RightOutlined />
@@ -138,8 +165,8 @@ function Dashboard() {
                 <Link to="/trade-crypto">
                   <div className="first-row">
                     <div>
-                      <h5>20</h5>
-                      <h6 className="label">Trade Crypto</h6>
+                      <h5>{btc.totalBTCSoldCompleted}</h5>
+                      <h6 className="label">Sell Crypto</h6>
                     </div>
                     <RightOutlined />
                   </div>
@@ -147,7 +174,7 @@ function Dashboard() {
                 <Link to="/transfer">
                   <div className="second-row">
                     <div>
-                      <h5>50</h5>
+                      <h5>{payload.totalCompletedTransfer}</h5>
                       <h6 className="label">Transfer</h6>
                     </div>
                     <RightOutlined />
@@ -165,8 +192,8 @@ function Dashboard() {
                 <Link to="/trade-crypto">
                   <div className="first-row">
                     <div>
-                      <h5>20</h5>
-                      <h6 className="label">Trade Crypto</h6>
+                      <h5>{btc.totalBTCSoldCancelled}</h5>
+                      <h6 className="label">Sell Crypto</h6>
                     </div>
                     <RightOutlined />
                   </div>
@@ -174,7 +201,7 @@ function Dashboard() {
                 <Link to="/transfer">
                   <div className="second-row">
                     <div>
-                      <h5>50</h5>
+                      <h5>{payload.totalCancelledTransfer}</h5>
                       <h6 className="label">Transfer</h6>
                     </div>
                     <RightOutlined />
@@ -192,7 +219,7 @@ function Dashboard() {
                 <Link to="/trade-crypto">
                   <div className="first-row">
                     <div>
-                      <h5>20</h5>
+                      <h5>{payload.totalEnabledAdmin}</h5>
                       <h6 className="label">Active</h6>
                     </div>
                     <RightOutlined />
@@ -201,7 +228,7 @@ function Dashboard() {
                 <Link to="/transfer">
                   <div className="second-row">
                     <div>
-                      <h5>50</h5>
+                      <h5>{payload.totalDisabledAdmin}</h5>
                       <h6 className="label">Disabled</h6>
                     </div>
                     <RightOutlined />

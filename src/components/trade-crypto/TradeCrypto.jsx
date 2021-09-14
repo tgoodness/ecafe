@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SearchOutlined } from '@material-ui/icons';
 import { Table } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
+import { useQuery } from 'react-query';
 
 import Pageview from '../../lib/layout/Pageview';
+import { ErrorPage } from '../../lib/control/error-page/FallBack';
+import { tradeCrypto } from '../../lib/http/users';
+
 import searchLogic from './core/SearchLogic';
 import modalHandler from './core/ModalHandler';
 import Details from './Details';
@@ -12,37 +16,27 @@ import historyTab from '../../lib/service/history-tab';
 import '../../lib/style/shared-history.scss';
 
 function TradeCrypto() {
-  const [active, handleActive] = historyTab();
+  const { status, error, data } = useQuery('tradeCrypto', tradeCrypto);
+  const [reference, visible, showModal, handleCancel] = modalHandler();
 
-  let count = 0;
-  const data = [
-    {
-      key: '01',
-      sn: util.SNformat(count++),
-      reference: 'BM37392',
-      status: 'PENDING',
-      amountInDollar: '578.00',
-      amountInCoin: '0.07856393',
-      feeInDollar: '10.00',
-      type: 'SELL',
-      date: '21/03/2020',
-      time: '10:20AM',
-    },
-    {
-      key: '02',
-      sn: util.SNformat(count++),
-      reference: 'BM373923',
-      status: 'COMPLETED',
-      amountInDollar: '572.00',
-      amountInCoin: '0.03856393',
-      feeInDollar: '102.00',
-      type: 'BUY',
-      date: '21/05/2020',
-      time: '10:20PM',
-    },
-  ];
+  let payload = [];
+  if (data !== undefined) {
+    data.data.data.txs.map((item, index) => {
+      const value = {
+        key: item.transactionReference,
+        sn: index + 1,
+        amountInDollar: item.amountInDollar,
+        amountInCoin: item.amountInCoin,
+        feeInDollar: item.feeInDollar,
+        orderType: item.orderType,
+        status: item.status,
+        date: util.dateFormat(item.dateAndTime),
+        time: util.timeFormat(item.dateAndTime),
+      };
+      payload.push(value);
+    });
+  }
 
-  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
   const columns = [
     {
       title: 'S/N',
@@ -54,13 +48,17 @@ function TradeCrypto() {
     },
     {
       title: 'Reference',
-      dataIndex: 'reference',
-      key: 'reference',
+      dataIndex: 'key',
+      key: 'key',
       // eslint-disable-next-line react/display-name
-      render: (text) => <span className="text-info">{text}</span>,
+      render: (text) => (
+        <span className="text-info" onClick={showModal} id={text}>
+          {text}
+        </span>
+      ),
       sorter: (a, b) => {
-        var v1 = a.reference;
-        var v2 = b.reference;
+        var v1 = a.registrationId;
+        var v2 = b.registrationId;
         if (v1 < v2) {
           return -1;
         }
@@ -125,11 +123,11 @@ function TradeCrypto() {
 
     {
       title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
+      dataIndex: 'orderType',
+      key: 'orderType',
       sorter: (a, b) => {
-        var v1 = a.type;
-        var v2 = b.type;
+        var v1 = a.orderType;
+        var v2 = b.orderType;
         if (v1 < v2) {
           return -1;
         }
@@ -144,8 +142,6 @@ function TradeCrypto() {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      // eslint-disable-next-line react/display-name
-      render: (text) => <span className="text-info">{text}</span>,
       sorter: (a, b) => {
         var v1 = a.date;
         var v2 = b.date;
@@ -163,8 +159,6 @@ function TradeCrypto() {
       title: 'Time',
       dataIndex: 'time',
       key: 'time',
-      // eslint-disable-next-line react/display-name
-      render: (text) => <span className="text-info">{text}</span>,
       sorter: (a, b) => {
         var v1 = a.time;
         var v2 = b.time;
@@ -183,86 +177,79 @@ function TradeCrypto() {
       dataIndex: 'key',
       key: 'key',
       // eslint-disable-next-line react/display-name
-      render: () => <RightOutlined />,
+      render: (key) => <RightOutlined className="text-primary" onClick={showModal} id={key} />,
     },
   ];
 
-  let src = searchTerm === '' ? data : searchResults;
+  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(payload);
+  let src = searchTerm === '' ? payload : searchResults;
 
+  const [active, handleActive] = historyTab();
   if (active === 'PENDING') {
-    src = src.filter((h) => h.status === 'PENDING');
+    src = src.filter((h) => h.status === 'UNCONFIRMED');
   }
 
   if (active === 'COMPLETED') {
-    src = src.filter((h) => h.status === 'COMPLETED');
+    src = src.filter((h) => h.status === 'CONFIRMED');
   }
 
   if (active === 'CANCELLED') {
-    src = src.filter((h) => h.status === 'CANCELLED');
+    src = src.filter((h) => h.status === 'DECLINED');
   }
 
-  const [selectedRow, setSelectedRow] = useState();
-  const [visible, showModal, handleCancel] = modalHandler();
-  const handleSelectedRow = (referenceId) => {
-    const rowData = data.filter((r) => r.reference === referenceId);
-    setSelectedRow(rowData);
-    showModal();
-  };
+  if (status !== 'success') {
+    return <ErrorPage status={status} error={error} data={data} title="Trade Crypto" />;
+  }
 
   return (
-    <Pageview title="Trade Crypto">
-      <div className="row shared-history">
-        <div className="offset-md-2 col-md-8">
-          <div className="tab-wrapper">
-            <div
-              className={active === 'PENDING' ? 'active' : ''}
-              onClick={() => handleActive('PENDING')}
-            >
-              PENDING
-            </div>
-            <div
-              className={active === 'COMPLETED' ? 'active' : ''}
-              onClick={() => handleActive('COMPLETED')}
-            >
-              COMPLETED
-            </div>
-            <div
-              className={active === 'CANCELLED' ? 'active' : ''}
-              onClick={() => handleActive('CANCELLED')}
-            >
-              CANCELLED
+    <>
+      <Pageview title="Trade Crypto">
+        <div className="row shared-history">
+          <div className="offset-md-2 col-md-8">
+            <div className="tab-wrapper">
+              <div
+                className={active === 'PENDING' ? 'active' : ''}
+                onClick={() => handleActive('PENDING')}
+              >
+                PENDING
+              </div>
+              <div
+                className={active === 'COMPLETED' ? 'active' : ''}
+                onClick={() => handleActive('COMPLETED')}
+              >
+                COMPLETED
+              </div>
+              <div
+                className={active === 'CANCELLED' ? 'active' : ''}
+                onClick={() => handleActive('CANCELLED')}
+              >
+                CANCELLED
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="row shared-history">
-        <div className="offset-md-2 col-md-8">
-          <div className="search-wrapper" data-aos="fade-down">
-            <SearchOutlined />
-            <input
-              type="text"
-              ref={inputRef}
-              value={searchTerm}
-              onChange={handleSearch}
-              placeholder="Search"
-            />
-          </div>
+        <div className="row shared-history">
+          <div className="offset-md-2 col-md-8">
+            <div className="search-wrapper" data-aos="fade-down">
+              <SearchOutlined />
+              <input
+                type="text"
+                ref={inputRef}
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Search"
+              />
+            </div>
 
-          <div className="table-responsive">
-            <Table
-              columns={columns}
-              dataSource={src}
-              onRow={(record) => {
-                return { onClick: () => handleSelectedRow(record.reference) };
-              }}
-            />
+            <div className="table-responsive">
+              <Table columns={columns} dataSource={src} />
+            </div>
           </div>
         </div>
-      </div>
-
-      <Details visible={visible} handleCancel={handleCancel} data={selectedRow} />
-    </Pageview>
+        <Details reference={reference} data={data} visible={visible} handleCancel={handleCancel} />
+      </Pageview>
+    </>
   );
 }
 

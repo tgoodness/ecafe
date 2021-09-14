@@ -1,10 +1,14 @@
 import React from 'react';
 import { Modal, Avatar } from 'antd';
 import Input from '../../lib/control/Input';
+import Alert from '../../lib/control/Alert';
 import FormControl from '../../lib/control/FormControl';
 import Button from '../../lib/control/Button';
 import formHandler from './core/FormHandler';
-import AdminAvater from '../../lib/assets/avater.png';
+import changePasswordRequest from './core/ChangePasswordRequest';
+
+import global from '../../lib/service/global';
+import misc from '../../lib/service/misc';
 import '../../lib/style/change-password.scss';
 
 function ChangePassword(props) {
@@ -19,6 +23,16 @@ function ChangePassword(props) {
     confirm,
     handleConfirm,
   ] = formHandler();
+
+  const [state, handleSubmit, handleClose] = changePasswordRequest(
+    password.value,
+    newPassword.value,
+    confirm.value,
+    handleCancel
+  );
+
+  const { GetImage } = global();
+
   return (
     <Modal
       title="Change Password"
@@ -30,7 +44,7 @@ function ChangePassword(props) {
     >
       <div className="change-password">
         <div className="avater-wrapper">
-          <Avatar src={AdminAvater} size={100} />
+          <Avatar src={misc.adminImage(GetImage())} size={100} />
         </div>
 
         <FormControl
@@ -54,7 +68,7 @@ function ChangePassword(props) {
         />
 
         <Input
-          label="Roles"
+          label="Confirm"
           type="password"
           value={confirm.value}
           onChange={handleConfirm}
@@ -62,9 +76,15 @@ function ChangePassword(props) {
           helperText={confirm.helperText}
         />
         <div className="btn-wrapper">
-          <Button className="btn btn-warning btn-block" label="Change" loading={false} />
+          <Button
+            className="btn btn-warning btn-block"
+            label="Change"
+            loading={state.loading}
+            onClick={handleSubmit}
+          />
         </div>
       </div>
+      <Alert open={state.open} msg={state.message} onClose={handleClose} />
     </Modal>
   );
 }

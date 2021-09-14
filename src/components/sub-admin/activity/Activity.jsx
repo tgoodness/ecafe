@@ -1,43 +1,44 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
 import Pageview from '../../../lib/layout/Pageview';
-
+import { ErrorPage } from '../../../lib/control/error-page/FallBack';
 import { CheckOutlined, SearchOutlined } from '@material-ui/icons';
-import { Table } from 'antd';
 
-import util from '../../../lib/service/util';
+import { Table } from 'antd';
 import searchLogic from './core/SearchLogic';
+import { adminActivities } from '../../../lib/http/admin';
 import '../../../lib/style/shared-history.scss';
-import { Link } from 'react-router-dom';
 
 function Activity() {
-  let count = 0;
-  const data = [
-    {
-      key: '01',
-      sn: util.SNformat(count++),
-      approved: true,
-      username: 'Lami',
-      userId: 'BM37392',
-      orderId: 'TXO233722',
-      amountInDollar: '578.00',
-      type: 'P2P(BUY)',
-      date: '21/03/2020',
-      time: '10:20AM',
-    },
-    {
-      key: '02',
-      sn: util.SNformat(count++),
-      approved: true,
-      username: 'Goodness',
-      userId: 'BM37392',
-      orderId: 'TXO243722',
-      amountInDollar: '228.00',
-      type: 'P2P(BUY)',
-      date: '21/03/2020',
-      time: '10:20AM',
-    },
-  ];
+  const { registrationId } = useParams();
+  const { status, error, data } = useQuery(['adminActivities', registrationId], () =>
+    adminActivities(registrationId)
+  );
+  
+  console.log(data);
+
+  let payload = [];
+  if (data !== undefined) {
+    data.data.data.admins.map((item, index) => {
+      const value = {
+        key: '01',
+        sn: index + 1,
+        approved: true,
+        username: 'Lami',
+        userId: 'BM37392',
+        orderId: 'TXO233722',
+        amountInDollar: '578.00',
+        type: 'P2P(BUY)',
+        date: '21/03/2020',
+        time: '10:20AM',
+      };
+
+      payload.push(value);
+    });
+  }
 
   const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
   const columns = [
@@ -187,10 +188,14 @@ function Activity() {
     },
   ];
 
+  if (status !== 'success') {
+    return <ErrorPage status={status} error={error} title="Activities" />;
+  }
+
   const src = searchTerm === '' ? data : searchResults;
 
   return (
-    <Pageview title="Activity" className="user-transactions">
+    <Pageview title="Activities" className="user-transactions">
       <div className="row shared-history">
         <div className="offset-md-2 col-md-8">
           <div className="search-wrapper" data-aos="fade-down">

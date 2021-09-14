@@ -1,3 +1,4 @@
+@import '../../color//color.scss';
 .fallback {
   height: 100vh;
   display: flex;
@@ -6,21 +7,43 @@
   align-items: center;
 
   img {
-   -webkit-animation: spin 1.8s linear infinite;
-      
+    -webkit-animation: spin 1.8s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
     }
 
-   @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-
-      50% {
-        -webkit-transform: rotate(20deg);
-      }
-
-      100% {
-        -webkit-transform: rotate(-20deg);
-      }
+    50% {
+      -webkit-transform: rotate(20deg);
     }
+
+    100% {
+      -webkit-transform: rotate(-20deg);
+    }
+  }
+}
+
+.error-wrapper {
+  margin-top: 100px;
+  text-align: center;
+  h5 {
+    color: $black-color;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  h6 {
+    font-size: 15px;
+    color: $grey-color;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  .btn-retry {
+    padding: 7px 15px;
+    color: $primary-color !important;
+    background-color: transparent !important;
+  }
 }

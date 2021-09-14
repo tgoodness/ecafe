@@ -1,16 +1,19 @@
 import React from 'react';
+
 import Pageview from '../../lib/layout/Pageview';
+import Alert from '../../lib/control/Alert';
 import Input from '../../lib/control/Input';
 import InputImage from '../../lib/control/InputImage';
 import Select from '../../lib/control/Select';
 import Button from '../../lib/control/Button';
 
-//import formHandler from './core/FormHandler';
 import NGN from '.././../lib/assets/currency/ngn.png';
-import '../../lib/style/send-crypto.scss';
 import formHandler from './core/FormHandler';
 import modalHandler from './otp/core/ModalHandler';
+import sendCryptoRequest from './core/SendCryptoRequest';
+
 import OTP from './otp/OTP';
+import '../../lib/style/send-crypto.scss';
 
 function SendCrypto() {
   const [
@@ -25,6 +28,13 @@ function SendCrypto() {
   ] = formHandler();
 
   const [visible, showModal, handleCancel] = modalHandler();
+  const [reference, state, handleSubmit, handleClose] = sendCryptoRequest(
+    type.value,
+    amount.value,
+    walletAddress.value,
+    priority.value,
+    showModal
+  );
 
   return (
     <Pageview title="Send Crypto">
@@ -32,7 +42,7 @@ function SendCrypto() {
         <div className="offset-md-3 col-md-6">
           <Select
             label="Select Type"
-            items={['Bitcoin', 'Ethereum']}
+            items={['BTC']}
             value={type.value}
             onChange={handleType}
             error={type.error}
@@ -61,11 +71,17 @@ function SendCrypto() {
             helperText={priority.helperText}
             items={['Low', 'Medium', 'High']}
           />
-          <Button label="Update" className="btn btn-warning btn-block" onClick={showModal} />
+          <Button
+            label="Send"
+            loading={state.loading}
+            className="btn btn-warning btn-block"
+            onClick={handleSubmit}
+          />
         </div>
       </div>
 
-      <OTP visible={visible} handleCancel={handleCancel} />
+      <OTP reference={reference} visible={visible} handleCancel={handleCancel} />
+      <Alert open={state.open} msg={state.message} onClose={handleClose} />
     </Pageview>
   );
 }
