@@ -56,7 +56,7 @@ function Admin() {
           </div>
 
           <div className="row">
-            <div className={`${loginActivities.length > 0 ? 'col-md-6' : 'offset-3 col-md-6'}`}>
+            <div className={`${loginActivities.length > 0 ? 'col-md-6' : 'offset-md-3 col-md-6'}`}>
               <div className="info-wrapper">
                 <h5 className="title">Profile Information</h5>
 

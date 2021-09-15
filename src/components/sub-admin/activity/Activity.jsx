@@ -1,15 +1,16 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { SearchOutlined } from '@material-ui/icons';
 
 import Pageview from '../../../lib/layout/Pageview';
 import { ErrorPage } from '../../../lib/control/error-page/FallBack';
-import { CheckOutlined, SearchOutlined } from '@material-ui/icons';
 
 import { Table } from 'antd';
 import searchLogic from './core/SearchLogic';
 import { adminActivities } from '../../../lib/http/admin';
+import util from '../../../lib/service/util';
 import '../../../lib/style/shared-history.scss';
 
 function Activity() {
@@ -17,30 +18,26 @@ function Activity() {
   const { status, error, data } = useQuery(['adminActivities', registrationId], () =>
     adminActivities(registrationId)
   );
-  
-  console.log(data);
 
   let payload = [];
   if (data !== undefined) {
-    data.data.data.admins.map((item, index) => {
+    data.data.data.trails.map((item, index) => {
+      const performedBy = JSON.parse(item.performedBy);
       const value = {
-        key: '01',
+        key: item.trailUuid,
         sn: index + 1,
-        approved: true,
-        username: 'Lami',
-        userId: 'BM37392',
-        orderId: 'TXO233722',
-        amountInDollar: '578.00',
-        type: 'P2P(BUY)',
-        date: '21/03/2020',
-        time: '10:20AM',
+        taskPerformed: item.taskPerformed,
+        registrationId: performedBy.registrationId,
+        role: performedBy.role,
+        date: util.dateFormat(item.dateAndTime),
+        time: util.timeFormat(item.dateAndTime),
       };
 
       payload.push(value);
     });
   }
 
-  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(data);
+  const [searchTerm, handleSearch, inputRef, searchResults] = searchLogic(payload);
   const columns = [
     {
       title: 'S/N',
@@ -60,36 +57,12 @@ function Activity() {
     },
 
     {
-      title: 'Approved',
-      dataIndex: 'approved',
-      key: 'approved',
-      render: (text) => (text ? <CheckOutlined className="text-success" /> : '---'),
-    },
-    {
-      title: 'ApproveBy',
-      dataIndex: 'username',
-      key: 'username',
-      render: (text) => <Link to="">{text}</Link>,
+      title: 'RegistrationId',
+      dataIndex: 'registrationId',
+      key: 'registrationId',
       sorter: (a, b) => {
-        var v1 = a.username;
-        var v2 = b.username;
-        if (v1 < v2) {
-          return -1;
-        }
-        if (v1 > v2) {
-          return 1;
-        }
-        return 0;
-      },
-    },
-    {
-      title: 'UserID',
-      dataIndex: 'userId',
-      key: 'userId',
-      render: (text) => <Link to="">{text}</Link>,
-      sorter: (a, b) => {
-        var v1 = a.userId;
-        var v2 = b.userId;
+        var v1 = a.registrationId;
+        var v2 = b.registrationId;
         if (v1 < v2) {
           return -1;
         }
@@ -101,13 +74,13 @@ function Activity() {
     },
 
     {
-      title: 'OrderId',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      render: (text) => <Link to="">{text}</Link>,
+      title: 'Task Performed',
+      dataIndex: 'taskPerformed',
+      key: 'taskPerformed',
+
       sorter: (a, b) => {
-        var v1 = a.orderId;
-        var v2 = b.orderId;
+        var v1 = a.taskPerformed;
+        var v2 = b.taskPerformed;
         if (v1 < v2) {
           return -1;
         }
@@ -119,30 +92,13 @@ function Activity() {
     },
 
     {
-      title: 'Amount(USD)',
-      dataIndex: 'amountInDollar',
-      key: 'amountInDollar',
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
       // eslint-disable-next-line react/display-name
       sorter: (a, b) => {
-        var v1 = a.amountInDollar;
-        var v2 = b.amountInDollar;
-        if (v1 < v2) {
-          return -1;
-        }
-        if (v1 > v2) {
-          return 1;
-        }
-        return 0;
-      },
-    },
-
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-      sorter: (a, b) => {
-        var v1 = a.type;
-        var v2 = b.type;
+        var v1 = a.role;
+        var v2 = b.role;
         if (v1 < v2) {
           return -1;
         }
@@ -191,8 +147,7 @@ function Activity() {
   if (status !== 'success') {
     return <ErrorPage status={status} error={error} title="Activities" />;
   }
-
-  const src = searchTerm === '' ? data : searchResults;
+  const src = searchTerm === '' ? payload : searchResults;
 
   return (
     <Pageview title="Activities" className="user-transactions">

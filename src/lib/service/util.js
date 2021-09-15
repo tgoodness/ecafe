@@ -235,7 +235,7 @@ const Botmecash = {
 
   error404(error) {
     if (error !== null) {
-      const findCode = error.message.search('404');
+      const findCode =  error.message.search('404');
       return findCode === -1 ? false : true;
     }
   },

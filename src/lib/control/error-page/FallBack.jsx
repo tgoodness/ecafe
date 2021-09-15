@@ -16,6 +16,7 @@ export const FallBack = () => {
 };
 
 export const ErrorPage = ({ status, error, title }) => {
+  console.log(error);
   if (status === 'loading') {
     return (
       <Pageview title={title}>
@@ -51,7 +52,7 @@ export const ErrorPage = ({ status, error, title }) => {
         <div className="error-wrapper">
           <h5>Connect to the internet</h5>
           <h6>You’re offline. Check your connection</h6>
-          <button className="btn-warning btn btn-retry" onClick={window.reload()}>
+          <button className="btn-warning btn btn-retry" onClick={window.location.reload()}>
             RETRY
           </button>
         </div>

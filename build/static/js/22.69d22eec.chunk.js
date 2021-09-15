@@ -1,2 +1,0 @@
-(this.webpackJsonpapp=this.webpackJsonpapp||[]).push([[22],{475:function(t,e,n){"use strict";n.r(e);n(0);var c=n(2);e.default=function(){return Object(c.jsx)("div",{children:Object(c.jsx)("h2",{children:"Page Not Found"})})}}}]);
-//# sourceMappingURL=22.69d22eec.chunk.js.map

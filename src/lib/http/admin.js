@@ -21,7 +21,8 @@ export const admins = () => {
 };
 
 export const adminActivities = async (registrationId) => {
-  return await axios.get(`${API_URL}admins/${registrationId}`, {
+  const param = { registrationId };
+  return await axios.post(`${API_URL}admins/activities`, param, {
     headers: authHeader(),
   });
 };
